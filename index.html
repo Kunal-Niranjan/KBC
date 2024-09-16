@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBC</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 290px;
+            background-image: url('https://mir-s3-cdn-cf.behance.net/projects/404/a7bb37177870461.Y3JvcCwyMDUzLDE2MDYsMzQ1LDA.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 70%;
+            background-color: navy;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+        .card {
+            background-color: navy;
+            border: none;
+        }
+        .form-check-label {
+            margin-left: 10px;
+        }
+        .btn {
+            margin: 10px;
+        }
+        @media (max-width: 576px){
+            body {
+                padding-top: 20px;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <audio id="g" controls autoplay  hidden>
+        <source src="kbc.mp3">
+    </audio>
+    <audio id="Oa" controls autoplay  hidden>
+        <source src="a.mp3">
+    </audio>
+    <audio id="Ob" controls autoplay  hidden>
+        <source src="b.mp3">
+    </audio>
+    <audio id="Oc" controls autoplay  hidden>
+        <source src="c.mp3">
+    </audio>
+    <audio id="Od" controls autoplay  hidden>
+        <source src="d.mp3">
+    </audio>
+<div class="row">
+    <div class="container col-8">
+        <h6 class="btn btn bg-light text-center text-dark">IF YOUR SELECT ALL THE ANSWER IS CORRECT THEN YOU WILL GET A ₹ 1CORE PRICE 🏆</h6>
+        <h1 class="text-center text-warning" id="t">Timer</h1>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center text-warning" id="q">Question</h4>
+                <div class="form-group">
+                    <div class="form-check">
+                        <h5 class="text-warning">
+                            <input class="form-check-input" type="radio" name="option" id="radioa" onclick="setValue('a')">
+                            <label class="form-check-label" id="c1">Option A</label>
+                        </h5>
+                    </div>
+                    <div class="form-check">
+                        <h5 class="text-warning">
+                            <input class="form-check-input" type="radio" name="option" id="radiob" onclick="setValue('b')">
+                            <label class="form-check-label" id="c2">Option B</label>
+                        </h5>
+                    </div>
+                    <div class="form-check">
+                        <h5 class="text-warning">
+                            <input class="form-check-input" type="radio" name="option" id="radioc" onclick="setValue('c')">
+                            <label class="form-check-label" id="c3">Option C</label>
+                        </h5>
+                    </div>
+                    <div class="form-check">
+                        <h5 class="text-warning">
+                            <input class="form-check-input" type="radio" name="option" id="radiod" onclick="setValue('d')">
+                            <label class="form-check-label" id="c4">Option D</label>
+                        </h5>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <center><button class="btn btn-dark" onclick="next()" id="n">Next</button>
+                    <button class="btn btn-danger" onclick="next1()" id="s" style="display: none;">Submit</button></center>
+                </div>
+                <h4 class="text-center mt-3 text-primary" id="res"></h4>
+                <h4 class="text-center mt-3 text-success" id="corr"></h4>
+                <h4 class="text-center mt-3 text-success" id="at"></h4>
+                <h4 class="text-center mt-3 text-danger" id="nat"></h4>
+                <h4 class="text-center mt-3 text-danger" id="incorr"></h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-2 bg-dark text-light">
+        <center><span id="p16">₹ 7Crore PRICE 🏆</span></center>
+        <center><span id="p15">₹ 1Crore</span></center>
+        <center><span id="p14">₹1,00,000</span></center>
+        <center><span id="p13">₹50,000</span></center>
+        <center><span id="p12">₹10,000</span></center>
+        <center><span id="p11">₹1100</span></center>
+        <center><span id="p10">₹1000</span></center>
+        <center><span id="p9">₹900</span></center>
+        <center><span id="p8">₹800</span></center>
+        <center><span id="p7">₹700</span></center>
+        <center><span id="p6">₹600</span></center>
+        <center><span id="p5">₹500</span></center>
+        <center><span id="p4">₹400</span></center>
+        <center><span id="p3">₹300</span></center>
+        <center><span id="p2">₹200</span></center>
+        <center><span id="p1">₹100</span></center>
+    </div>
+</div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+var Questions = [
+    { q: '1 Who painted the Mona Lisa?', a: 'Vincent van Gogh', b: 'Pablo Picasso', c: 'Leonardo da Vinci', d: 'Claude Monet', ans: 'c' },
+    { q: '2 What is the largest planet in our solar system?', a: 'Earth', b: 'Mars', c: 'Jupiter', d: 'Saturn', ans: 'c' },
+    { q: '3 Who wrote "To Kill a Mockingbird"?', a: 'Harper Lee', b: 'Mark Twain', c: 'Ernest Hemingway', d: 'F. Scott Fitzgerald', ans: 'a' },
+    { q: '4 What is the chemical symbol for gold?', a: 'Au', b: 'Ag', c: 'Pb', d: 'Fe', ans: 'a' },
+    { q: '5 What gas do plants primarily use for photosynthesis?', a: 'Oxygen', b: 'Hydrogen', c: 'Carbon Dioxide', d: 'Nitrogen', ans: 'c' },
+    { q: '6 Who is the author of "1984"?', a: 'Aldous Huxley', b: 'George Orwell', c: 'Ray Bradbury', d: 'J.K. Rowling', ans: 'b' },
+    { q: '7 What is the smallest unit of an element?', a: 'Molecule', b: 'Atom', c: 'Cell', d: 'Electron', ans: 'b' },
+    { q: '8 What is the capital of Japan?', a: 'Seoul', b: 'Beijing', c: 'Tokyo', d: 'Hanoi', ans: 'c' },
+    { q: '9 Who developed the theory of relativity?', a: 'Isaac Newton', b: 'Niels Bohr', c: 'Albert Einstein', d: 'Galileo Galilei', ans: 'c' },
+    { q: '10 What is the longest river in the world?', a: 'Amazon', b: 'Nile', c: 'Yangtze', d: 'Mississippi', ans: 'b' },
+    { q: '11 What is the main ingredient in guacamole?', a: 'Tomato', b: 'Onion', c: 'Avocado', d: 'Pepper', ans: 'c' },
+    { q: '12 Who discovered penicillin?', a: 'Louis Pasteur', b: 'Alexander Fleming', c: 'Marie Curie', d: 'Edward Jenner', ans: 'b' },
+    { q: '13 What is the hardest natural substance on Earth?', a: 'Gold', b: 'Iron', c: 'Diamond', d: 'Platinum', ans: 'c' },
+    { q: '14 What is the primary language spoken in Brazil?', a: 'Spanish', b: 'Portuguese', c: 'English', d: 'French', ans: 'b' },
+    { q: '15 What is the capital city of Australia?', a: 'Sydney', b: 'Melbourne', c: 'Canberra', d: 'Brisbane', ans: 'c' },
+    { q: '16 What element does "O" represent on the periodic table?', a: 'Osmium', b: 'Oxygen', c: 'Gold', d: 'Oganesson', ans: 'b' }
+];
+var i = 0;
+var Estring = '';
+var res = 0;
+var attempted = 0;
+var correct = 0;
+var incorrect = 0;
+var t;
+
+function show() {
+    if (i >= Questions.length) {
+        document.getElementById('s').style.display = 'block';
+        document.getElementById('n').style.display = 'none';
+        document.getElementById('res').innerText = 'Submitted successfully | Your score: ' + res;
+        document.getElementById('at').innerText = 'Attempted: ' + attempted;
+        document.getElementById('nat').innerText = 'Not Attempted: ' + (Questions.length - attempted);
+        document.getElementById('corr').innerText = 'Correct: ' + correct;
+        document.getElementById('incorr').innerText = 'Incorrect: ' + incorrect;
+        return;
+    }
+
+    var Q = Questions[i];
+    var delay = 2500;
+    setTimeout(() => {
+        document.getElementById('q').innerText = Q.q;
+    }, delay);
+    delay += 1000;
+    ['a', 'b', 'c', 'd'].forEach((option, index) => {
+        setTimeout(() => {
+            let audio = new Audio(option + '.mp3');
+            audio.play();
+            document.getElementById('c' + (index + 1)).innerText = Q[option];
+        }, delay + (1000 * index));
+    });
+    setTimeout(() => {
+        setInterval(t);
+    }, delay + 4000);
+    document.getElementById('radioa').checked = false;
+    document.getElementById('radiob').checked = false;
+    document.getElementById('radioc').checked = false;
+    document.getElementById('radiod').checked = false;
+    if (Estring) {
+        document.getElementById('radio' + Estring).checked = true;
+    }
+    var count = 10;
+    document.getElementById('t').innerText = 'your timer starts in 10 seconds';
+    setTimeout(() => {
+        if (i <= parseInt(Questions.length / 2) - 3) {
+            count = 20;
+        } else if (i <= parseInt(Questions.length / 2) + 2) {
+            count = 30;
+        } else {
+            count = 60;
+        }
+    }, 9000);
+
+    t = setInterval(() => {
+        document.getElementById('t').innerText = count;
+        count--;
+        if (count < 0) {
+            clearInterval(t);
+            next();
+        }
+    }, 1000);
+}
+
+function setValue(value) {
+    Estring = value;
+}
+
+function next() {
+    count = 20;
+    var qElems = Array.from({ length: 16 }, (_, index) => document.getElementById('p' + (index + 1)).innerText);
+    if (Estring) {
+        attempted++;
+        if (Estring === Questions[i].ans){
+            if (i === 0) {
+                res = 100;
+                document.getElementById('p1').style.color = 'red';
+            } else if (i === 1) {
+                res = 200;
+                document.getElementById('p2').style.color = 'red';
+            } else if (i === 2) {
+                res = 300;
+                document.getElementById('p3').style.color = 'red';
+            } else if (i === 3) {
+                res = 400;
+                document.getElementById('p4').style.color = 'red';
+            } else if (i === 4) {
+                res = 500;
+                document.getElementById('p5').style.color = 'red';
+            } else if (i === 5) {
+                res = 600;
+                document.getElementById('p6').style.color = 'red';
+            } else if (i === 6) {
+                res = 700;
+                document.getElementById('p7').style.color = 'red';
+            } else if (i === 7) {
+                res = 800;
+                document.getElementById('p8').style.color = 'red';
+            } else if (i === 8) {
+                res = 900;
+                document.getElementById('p9').style.color = 'red';
+            } else if (i === 9) {
+                res = 1000;
+                document.getElementById('p10').style.color = 'red';
+            } else if (i === 10) {
+                res = 1100;
+                document.getElementById('p11').style.color = 'red';
+            } else if (i === 11) {
+                res = 10000;
+                document.getElementById('p12').style.color = 'red';
+            } else if (i === 12) {
+                res = 50000;
+                document.getElementById('p13').style.color = 'red';
+            } else if (i === 13) {
+                res = 100000;
+                document.getElementById('p14').style.color = 'red';
+            } else if (i === 14) {
+                res = "₹ 1Crore";
+                document.getElementById('p15').style.color = 'red';
+            } else if (i === 15) {
+                res = "₹ 7CORE PRICE 🏆";
+                document.getElementById('p16').style.color = 'red';
+            }
+            qElems.forEach((qElem, index) => {
+                if (qElem == res) {
+                    document.getElementById('p' + (index + 1)).style.color = `rgb(${255 - index * 15}, ${255 - index * 15}, ${255 - index * 15})`;
+                }
+            });
+            correct++;
+            document.getElementById('s').style.display = 'none';
+            document.getElementById('n').style.display = 'block';
+        } else {
+            incorrect++;
+            if(incorrect===1){
+            i=15
+            document.write('<div style="text-align:center; background-color:lightpink; padding:10px;">');
+            document.write('<h2>SORRY YOUR ANSWER IS INCORRECT YOU CANT GET THE PRICE</h2>')
+            document.write('<img style="height="500px"; width="500px" src="https://media1.tenor.com/m/Md87F-7hWDsAAAAC/amitabh-bachchan-amitabh-bachchan-kbc.gif"/>')
+            document.write('<h2>Correct: ' + correct + '</h2>');
+            document.write('<h2>Incorrect: ' + incorrect + '</h2>');
+            document.write('</div>');    
+            }
+            document.getElementById('res').innerText = 'Submitted successfully | Your score: ' + res;
+            document.getElementById('at').innerText = 'Attempted: ' + attempted;
+            document.getElementById('nat').innerText = 'Not Attempted: ' + (Questions.length - attempted);
+            document.getElementById('corr').innerText = 'Correct: ' + correct;
+            document.getElementById('incorr').innerText = 'Incorrect: ' + incorrect;
+            document.getElementById('n').style.display = 'none'; 
+            document.getElementById('s').style.display = 'none';
+            clearInterval(t);
+        }
+        Estring = '';
+    }
+    clearInterval(t);
+    i++;
+    show();
+}
+function next1(){
+    document.write('<h1 style="text-align:center; background-color:green;">' + res + ' your amount is</h1>');
+    if(res==="₹ 7CORE PRICE 🏆"){
+        document.write('<img style="height="500px"; width="100%" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2l1Yzd6anhoOHlmbmtla3ltdTBqOWRndjQ4Y3hiMWF1NG4wOTYwMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IS6CvSgqzzv4T1LMDj/giphy.webp"/>')
+    }
+    document.write('<div style="text-align:center; background-color:lightgrey; padding:10px;">');
+    document.write('<h2>Attempted: ' + attempted + '</h2>');
+    document.write('<h2>Not Attempted: ' + (Questions.length - attempted) + '</h2>');
+    document.write('<h2>Correct: ' + correct + '</h2>');
+    document.write('<h2>Incorrect: ' + incorrect + '</h2>');
+    document.write('</div>');
+    clearInterval(t);
+}
+show();
+
+</script>
+</body>
+</html>
